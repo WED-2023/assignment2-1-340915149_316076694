@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Login</h1>
+    <h1 class="title mb-4">Login</h1>
     <b-form @submit.prevent="onLogin">
       <b-form-group
         id="input-group-Username"
@@ -43,9 +43,9 @@
         class="mx-auto w-100"
         >Login</b-button
       >
-      <div class="mt-2">
+      <div class="mt-4">
         Do not have an account yet?
-        <router-link to="register"> Register in here</router-link>
+        <router-link to="register"> Register</router-link>
       </div>
     </b-form>
     <b-alert

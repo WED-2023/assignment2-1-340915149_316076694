@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+    <RecipePreviewList title="Random Recipes:" class="RandomRecipes center mt-3" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
+    <!-- {{ !$root.store.username }} -->
     <RecipePreviewList
-      title="Last Viewed Recipes"
+      title="Last Viewed Recipes:"
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,

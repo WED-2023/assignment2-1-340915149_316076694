@@ -1,18 +1,52 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
-      <router-link :to="{ name: 'search' }">Search</router-link>|
-      {{ !$root.store.username }}
-      <span v-if="!$root.store.username">
-        Guest:
-        <router-link :to="{ name: 'register' }">Register</router-link>|
-        <router-link :to="{ name: 'login' }">Login</router-link>|
-      </span>
-      <span v-else>
-        {{ $root.store.username }}: <button @click="Logout">Logout</button>|
-      </span>
-    </div>
+    <b-navbar toggleable="lg" type="dark" variant="primary" class="mb-4">
+      <b-navbar-brand :to="{ name: 'main' }">Mock Recipes</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item :to="{ name: 'main' }">Home</b-nav-item>
+          <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
+          <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
+          
+          <b-nav-item-dropdown v-if="$root.store.username" right>
+            <template #button-content>
+              <em>Personal</em>
+            </template>
+            <b-dropdown-item :to="{ name: 'favorites' }">Favorites <b-icon icon="heart"></b-icon></b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'private' }">Private <b-icon icon="lock"></b-icon></b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'lafamilia' }">La Familia <b-icon icon="people"></b-icon></b-dropdown-item>
+          </b-nav-item-dropdown>
+
+
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <!-- <b-nav-form>
+            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form> -->
+
+          <b-nav-item-dropdown v-if="$root.store.username" right>
+            <template #button-content>
+              <em>Logged as: {{$root.store.username }}</em>
+            </template>
+            <!-- TODO add profile route and page -->
+            <b-dropdown-item>Profile</b-dropdown-item>
+            <b-dropdown-item @click="Logout">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown v-else right>
+            <template #button-content>
+              <em>Guest</em>
+            </template>
+            <b-dropdown-item :to="{ name: 'login' }">Login</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'register' }">Register</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <router-view />
   </div>
 </template>

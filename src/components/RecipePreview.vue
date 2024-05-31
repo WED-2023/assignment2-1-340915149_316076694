@@ -1,19 +1,15 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
-      </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
+  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+    <div>
+      <b-card :title="recipe.title" :img-src="recipe.image" :img-alt="recipe.title" style="max-width: 20rem;"
+        class="mb-2 ">
+        <template #footer>
+          <ul class="recipe-overview list-unstyled mb-0">
+            <li><b-icon icon="clock"></b-icon> {{ recipe.readyInMinutes }} minutes</li>
+            <li><b-icon icon="heart"></b-icon> {{ recipe.aggregateLikes }} likes</li>
+          </ul>
+        </template>
+      </b-card>
     </div>
   </router-link>
 </template>

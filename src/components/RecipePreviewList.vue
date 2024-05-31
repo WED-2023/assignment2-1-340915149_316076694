@@ -1,13 +1,15 @@
 <template>
   <b-container>
     <h3>
-      {{ title }}:
+      {{ title }}
       <slot></slot>
     </h3>
     <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
-      </b-col>
+      <b-card-group>
+        <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" lg="4" class="mb-4">
+          <RecipePreview :recipe="r" />
+        </b-col>
+      </b-card-group>
     </b-row>
   </b-container>
 </template>
@@ -44,10 +46,7 @@ export default {
         const amountToFetch = 5; // Set this to how many recipes you want to fetch
         const response = mockGetRecipesPreview(amountToFetch);
 
-
-        console.log(response);
         const recipes = response.data.recipes;
-        console.log(recipes);
         this.recipes = [];
         this.recipes.push(...recipes);
       } catch (error) {

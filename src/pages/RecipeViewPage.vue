@@ -1,44 +1,40 @@
 <template>
-  <div class="container">
+  <b-container>
     <div v-if="recipe">
-      <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
-      </div>
-      <div class="recipe-body">
-        <div class="wrapper">
-          <div class="wrapped">
-            <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
-            </div>
-            Ingredients:
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
+      <b-card class="mb-3">
+        <b-card-header class="mb-3">
+          <h1>{{ recipe.title }}</h1>
+        </b-card-header>
+        <b-card-img :src="recipe.image" alt="Recipe Image" class="center mb-3 rounded"></b-card-img>
+        <b-card-body>
+          <hr />
+          <h5>Details:</h5>
+          <p><b-icon icon="clock"></b-icon> Ready in {{ recipe.readyInMinutes }} minutes</p>
+          <p><b-icon icon="heart"></b-icon> Likes: {{ recipe.aggregateLikes }} likes</p>
+          <hr />
+          <h5>Ingredients:</h5>
+          <ul>
+            <li v-for="(ingredient, index) in recipe.extendedIngredients" :key="index + '_' + ingredient.id">
+              {{ ingredient.original }}
+            </li>
+          </ul>
+          <div v-if="recipe._instructions.length > 0">
+            <h5 >Instructions</h5>
+          <hr />
+          <ol>
+            <li v-for="step in recipe._instructions" :key="step.number">
+              {{ step.step }}
+            </li>
+          </ol>
           </div>
-          <div class="wrapped">
-            Instructions:
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
+          
+        </b-card-body>
+      </b-card>
     </div>
-  </div>
+    <div v-else>
+      <p>Loading...</p>
+    </div>
+  </b-container>
 </template>
 
 <script>
@@ -61,7 +57,7 @@ export default {
         //     withCredentials: true
         //   }
         // );
-
+        console.log(this.$route.params.recipeId)
         response = mockGetRecipeFullDetails(this.$route.params.recipeId);
 
         // console.log("response.status", response.status);
