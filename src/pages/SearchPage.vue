@@ -17,8 +17,8 @@
       </b-row>
       <b-row class="mt-3">
         <b-col>
-          <b-form-group label="Results per page:">
-            <b-form-select v-model="resultsPerPage" :options="resultsOptions"></b-form-select>
+          <b-form-group label="Number:">
+            <b-form-select v-model="number" :options="resultsOptions"></b-form-select>
           </b-form-group>
         </b-col>
         <b-col>
@@ -46,30 +46,34 @@
           </b-form-group>
         </b-col>
       </b-row>
-      <RecipePreviewList v-if="recipes.length > 0" :recipes="recipes" title="Search Results" />
-      <b-alert v-else-if="searchPerformed && recipes.length === 0" variant="warning">No results found</b-alert>
+      <Spinner :loading="loading" />
+      <RecipePreviewList v-if="!loading && recipes.length > 0" :recipes="recipes" title="Search Results:" routeName="recipe" />
+      <b-alert v-else-if="!loading && searchPerformed && recipes.length === 0" variant="warning">No results found</b-alert>
     </div>
   </b-container>
 </template>
 
 <script>
 import RecipePreviewList from '../components/RecipePreviewList';
+import Spinner from "../components/Spinner.vue"; // Import the Spinner component
 import { mockGetRecipesPreview } from '../services/recipes.js';
 
 export default {
   components: {
-    RecipePreviewList
+    RecipePreviewList,
+    Spinner // Register the Spinner component
   },
   data() {
     return {
       searchQuery: '',
-      resultsPerPage: 5,
+      number: 5,
       selectedCuisine: null,
       selectedDiet: null,
       selectedIntolerance: null,
       sortBy: null,
       recipes: [],
       searchPerformed: false,
+      loading: false, // Loading state
       resultsOptions: [
         { value: 5, text: '5' },
         { value: 10, text: '10' },
@@ -99,24 +103,28 @@ export default {
   },
   methods: {
     async searchRecipes() {
+      this.loading = true; // Start loading
       this.searchPerformed = true;
 
-      // for now, use mock data
-      const response = mockGetRecipesPreview(this.resultsPerPage);
-      let recipes = response.data.recipes;
-
-
-      if (this.searchQuery) {
-        recipes = recipes.filter(r => r.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      try {
+        const response = await this.axios.post(`${this.$root.store.server_domain}/recipes/search`, {
+          params: {
+            query: this.searchQuery,
+            number: this.number,
+            cuisine: this.selectedCuisine,
+            diet: this.selectedDiet,
+            intolerance: this.selectedIntolerance,
+            sort: this.sortBy
+          }
+        });
+        console.log(response)
+        let recipes = response.data;
+        this.recipes = recipes;
+      } catch (error) {
+        console.error("Error searching recipes:", error);
+      } finally {
+        this.loading = false; // Stop loading once the data is fetched
       }
-
-      if (this.sortBy === 'time') {
-        recipes.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
-      } else if (this.sortBy === 'popularity') {
-        recipes.sort((a, b) => b.aggregateLikes - a.aggregateLikes);
-      }
-
-      this.recipes = recipes;
     }
   }
 };

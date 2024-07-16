@@ -1,12 +1,12 @@
 <template>
-  <router-link :to="{ name: 'recipe', params: { recipeId: recipe.id } }" class="recipe-preview">
+  <router-link :to="{ name: routeName, params: { recipe: recipe, routeName: routeName } }" class="recipe-preview">
     <div>
       <b-card :title="recipe.title" :img-src="recipe.image" :img-alt="recipe.title" style="max-width: 20rem;"
         class="mb-2 ">
         <template #footer>
           <ul class="recipe-overview list-unstyled mb-0">
             <li><b-icon icon="clock"></b-icon> {{ recipe.readyInMinutes }} minutes</li>
-            <li><b-icon icon="heart"></b-icon> {{ recipe.aggregateLikes }} likes</li>
+            <li v-if="recipe.aggregateLikes"><b-icon icon="heart"></b-icon> {{ recipe.aggregateLikes }} likes</li>
           </ul>
         </template>
       </b-card>
@@ -16,19 +16,23 @@
 
 <script>
 export default {
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
-  },
+  // mounted() {
+  //   this.axios.get(this.recipe.image).then((i) => {
+  //     this.image_load = true;
+  //   });
+  // },
   data() {
     return {
-      image_load: false
+      // image_load: false
     };
   },
   props: {
     recipe: {
       type: Object,
+      required: true
+    },
+    routeName: {
+      type: String,
       required: true
     }
 

@@ -48,6 +48,26 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
+    path: "/lafamilia/:recipeId",
+    name: "lafamiliaRecipe",
+    component: () => import("./pages/RecipeViewPage"),
+  },
+  {
+    path: "/user/:recipeId",
+    name: "userRecipe",
+    component: () => import("./pages/RecipeViewPage"),
+  },
+  {
+    path: "/lafamilia/create",
+    name: "lafamiliaCreate",
+    component: () => import("./pages/LafamiliaCreatePage"),
+  },
+  {
+    path: "/recipe/create",
+    name: "recipeCreate",
+    component: () => import("./pages/RecipeCreatePage"),
+  },
+  {
     path: "*",
     name: "notFound",
     component: NotFound,

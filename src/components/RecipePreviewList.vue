@@ -5,11 +5,9 @@
       <slot></slot>
     </h3>
     <b-row>
-      <b-card-group>
-        <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" lg="4" class="mb-4">
-          <RecipePreview :recipe="r" />
-        </b-col>
-      </b-card-group>
+      <b-col v-for="r in recipes" :key="r.id" cols="12" md="6" lg="4" class="mb-4">
+        <RecipePreview :recipe="r" :routeName="routeName" />
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -26,34 +24,50 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    recipes: {
+      type: Array,
+      required: true
+    },
+    routeName: {
+      type: String,
+      required: true
     }
   },
-  data() {
-    return {
-      recipes: []
-    };
-  },
-  mounted() {
-    this.updateRecipes();
-  },
-  methods: {
-    async updateRecipes() {
-      try {
-        // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/random",
-        // );
+  // data() {
+  //   return {
+  //     fetchedRecipes: []
+  //   };
+  // },
+  // computed: {
+  //   displayRecipes() {
+  //     return this.recipes !== null ? this.recipes : this.fetchedRecipes;
+  //   }
+  // },
+  // mounted() {
+  //   if (this.recipes === null) {
+  //     this.updateRecipes();
+  //   }
+  // },
+  // methods: {
+    // async updateRecipes() {
+    //   try {
+        // const amountToFetch = 6;
+        // const response = await this.axios.get(`${this.$root.store.server_domain}/recipes/randomRecipes`, {
+        //   params: {
+        //     number: amountToFetch
+        //   },
+        // });
+    //     // const response = mockGetRecipesPreview(amountToFetch);
+    //     // TODO add recipes
+    //     const recipes = response.data;
 
-        const amountToFetch = 5; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview(amountToFetch);
-
-        const recipes = response.data.recipes;
-        this.recipes = [];
-        this.recipes.push(...recipes);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
+    //     this.fetchedRecipes = recipes;
+    //   } catch (error) {
+    //     console.log('Error fetching recipes:', error);
+    //   }
+    // }
+  // }
 };
 </script>
 

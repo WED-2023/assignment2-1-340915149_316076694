@@ -18,6 +18,14 @@
             <b-dropdown-item :to="{ name: 'lafamilia' }">La Familia <b-icon icon="people"></b-icon></b-dropdown-item>
           </b-nav-item-dropdown>
 
+          <b-nav-item-dropdown v-if="$root.store.username" right>
+            <template #button-content>
+              <em>Recipe Workshop</em>
+            </template>
+            <b-dropdown-item :to="{ name: 'recipeCreate' }">Create your recipe</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'lafamiliaCreate' }">Create La Familia Recipe</b-dropdown-item>
+          </b-nav-item-dropdown>
+
 
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
@@ -55,10 +63,13 @@
 export default {
   name: "App",
   methods: {
-    Logout() {
+    async Logout() {
       this.$root.store.logout();
+      sessionStorage.clear();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
+      const response = await this.axios.post(
+          this.$root.store.server_domain +"/Logout",
+      );
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

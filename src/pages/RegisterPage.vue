@@ -25,10 +25,10 @@
       </b-form-group>
 
       <b-form-group id="input-group-lastName" label-cols-sm="3" label="Last Name:" label-for="lastName">
-        <b-form-input id="lastName" type="text" v-model="$v.form.firstName.$model"
+        <b-form-input id="lastName" type="text" v-model="$v.form.lastName.$model"
           :state="validateState('lastName')"></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.lastName.required">
-          First name is required
+          Last name is required
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -167,22 +167,24 @@ export default {
     async Register() {
       try {
 
-        // const response = await this.axios.post(
-        //   // "https://test-for-3-2.herokuapp.com/user/Register",
-        //   this.$root.store.server_domain + "/Register",
+        const response = await this.axios.post(
+          this.$root.store.server_domain + "/Register",
+          {
+            username: this.form.username,
+            password: this.form.password,
+            firstname: this.form.firstName,
+            lastname: this.form.lastName,
+            email: this.form.email,
+            country: this.form.country  
+          }
+        );
 
-        //   {
-        //     username: this.form.username,
-        //     password: this.form.password
-        //   }
-        // );
+        // const userDetails = {
+        //   username: this.form.username,
+        //   password: this.form.password
+        // };
 
-        const userDetails = {
-          username: this.form.username,
-          password: this.form.password
-        };
-
-        const response = mockRegister(userDetails);
+        // const response = mockRegister(userDetails);
 
         this.$router.push("/login");
         // console.log(response);

@@ -1,29 +1,27 @@
 <template>
   <div class="container mt-5">
+    <div class="container mt-5">
     <b-card>
       <h1 class="title">About Us</h1>
       <p class="lead">
-        Welcome to Mock Recipes! We are passionate about sharing the best mock recipes with our community.
+        Welcome to Family Recipe Vault! We're here to bring together your favorite recipes and cooking memories.
       </p>
       <p>
-        Our mission is to provide delicious, easy-to-follow not real recipes that anyone can make at home. Whether you
-        are a beginner cook or a seasoned chef, you will find something to love in our fake collection.
+        Our mission is to offer a comprehensive platform where you can explore detailed recipe instructions, track your cooking progress step-by-step, and preserve your cherished family recipes in one special personal area.
       </p>
       <p>
-        We believe that cooking should be enjoyable and accessible to everyone. That's why we strive to create not real
-        recipes that are simple, affordable, and full of flavor.
+        Whether you're a novice cook or an experienced chef, our collection caters to all. We aim to make cooking enjoyable, accessible, and a delightful experience for everyone.
       </p>
       <p>
-        Thank you for visiting our site. We hope you find inspiration in our recipes and enjoy making them as much as we
-        do. Happy cooking!
+        With Family Recipe Vault, you can easily save and organize all your recipe notes scattered around the house, ensuring that your culinary heritage is preserved for generations to come.
       </p>
-
-      You can check our other projects such as:
-      <li><a href="https://wed-2023.github.io/340915149/">Fight Club: The Narrator/Tyler Durden Experience</a></li>
+      <p>
+        Thank you for joining us on this culinary journey. We hope our platform inspires you and enhances your cooking adventures. Happy cooking!
+      </p>
       
-
       <b-button class="mt-2" variant="primary" href="#contact">Contact Us</b-button>
     </b-card>
+  </div>
   </div>
 </template>
   
